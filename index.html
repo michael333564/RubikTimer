@@ -7,46 +7,42 @@
 <style>
 
 body{
-  margin:0;
-  font-family:Arial;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:white;
-  text-align:center;
-  height:100vh;
-  overflow:hidden;
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+height:100vh;
+overflow:hidden;
 }
 
 h1{
-  margin-top:10px;
-  font-size:50px;
-  font-weight:bold;
-  color:#ffd93d;
-  text-shadow: 2px 2px 5px black;
+margin-top:10px;
+font-size:50px;
+font-weight:bold;
+color:#ffd93d;
+text-shadow: 2px 2px 5px black;
 }
 
-/* Kontener z "rysunkiem" kostki */
-#cubeContainer{
-  margin: 20px auto 40px;
-  display: inline-block;
-  width: 180px;
-  height: 180px;
-  perspective: 600px;
+/* Kontener z krzyżykiem cube */
+#cubeCross{
+display:inline-block;
+margin:20px auto;
 }
 
-.cubeFace{
-  width: 60px;
-  height: 60px;
-  display:inline-block;
-  margin:1px;
-  line-height:60px;
-  font-weight:bold;
-  color:black;
-  text-align:center;
-  font-size:18px;
-  border:1px solid #333;
+.faceRow, .middleRow{
+display:flex;
+justify-content:center;
+margin-bottom:2px;
 }
 
-/* Kolory ścian (proste oznaczenie scramble) */
+.face{
+width:30px;
+height:30px;
+margin:1px;
+border:1px solid #222;
+}
+
 .U{background:#ffff00;} /* yellow */
 .D{background:#ffffff;} /* white */
 .F{background:#ff0000;} /* red */
@@ -55,73 +51,73 @@ h1{
 .L{background:#00ff00;} /* green */
 
 #scramble{
-  font-size:22px;
-  margin:15px;
-  color:#ffffff;
-  letter-spacing:2px;
+font-size:22px;
+margin:15px;
+color:#ffffff;
+letter-spacing:2px;
 }
 
 #timer{
-  font-size:120px;
-  margin-top:20px;
-  transition:0.2s;
+font-size:120px;
+margin-top:20px;
+transition:0.2s;
 }
 
 .ready{
-  color:#00ff88;
+color:#00ff88;
 }
 
 #stats{
-  margin-top:20px;
-  font-size:22px;
+margin-top:20px;
+font-size:22px;
 }
 
 button{
-  margin-top:15px;
-  padding:10px 18px;
-  border:none;
-  border-radius:8px;
-  background:#ff4d6d;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
+margin-top:15px;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+background:#ff4d6d;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 button:hover{
-  background:#ff1e4d;
+background:#ff1e4d;
 }
 
 #timesBox{
-  position:fixed;
-  left:20px;
-  bottom:20px;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(6px);
-  padding:15px;
-  border-radius:10px;
-  width:220px;
-  max-height:300px;
-  overflow:auto;
+position:fixed;
+left:20px;
+bottom:20px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(6px);
+padding:15px;
+border-radius:10px;
+width:220px;
+max-height:300px;
+overflow:auto;
 }
 
 #timesBox h3{
-  margin-top:0;
-  color:#ffd93d;
+margin-top:0;
+color:#ffd93d;
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
+width:100%;
+border-collapse:collapse;
+font-size:14px;
 }
 
 th,td{
-  padding:5px;
-  border-bottom:1px solid rgba(255,255,255,0.2);
+padding:5px;
+border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
 tr:hover{
-  background:rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.1);
 }
 
 </style>
@@ -131,11 +127,60 @@ tr:hover{
 
 <h1>Rubik Timer</h1>
 
-<!-- Kontener wizualnego cube -->
-<div id="cubeContainer">
-  <div class="cubeFace U"></div><div class="cubeFace U"></div><div class="cubeFace U"></div><br>
-  <div class="cubeFace U"></div><div class="cubeFace U"></div><div class="cubeFace U"></div><br>
-  <div class="cubeFace U"></div><div class="cubeFace U"></div><div class="cubeFace U"></div>
+<!-- Krzyżyk cube -->
+<div id="cubeCross">
+  <!-- Górna ściana -->
+  <div class="faceRow">
+    <div class="face U" id="U1"></div>
+    <div class="face U" id="U2"></div>
+    <div class="face U" id="U3"></div>
+  </div>
+  <div class="faceRow">
+    <div class="face U" id="U4"></div>
+    <div class="face U" id="U5"></div>
+    <div class="face U" id="U6"></div>
+  </div>
+  <div class="faceRow">
+    <div class="face U" id="U7"></div>
+    <div class="face U" id="U8"></div>
+    <div class="face U" id="U9"></div>
+  </div>
+
+  <!-- Środkowy rząd: L, F, R, B -->
+  <div class="middleRow">
+    <div class="face L" id="L1"></div>
+    <div class="face L" id="L2"></div>
+    <div class="face L" id="L3"></div>
+
+    <div class="face F" id="F1"></div>
+    <div class="face F" id="F2"></div>
+    <div class="face F" id="F3"></div>
+
+    <div class="face R" id="R1"></div>
+    <div class="face R" id="R2"></div>
+    <div class="face R" id="R3"></div>
+
+    <div class="face B" id="B1"></div>
+    <div class="face B" id="B2"></div>
+    <div class="face B" id="B3"></div>
+  </div>
+
+  <!-- Dolna ściana -->
+  <div class="faceRow">
+    <div class="face D" id="D1"></div>
+    <div class="face D" id="D2"></div>
+    <div class="face D" id="D3"></div>
+  </div>
+  <div class="faceRow">
+    <div class="face D" id="D4"></div>
+    <div class="face D" id="D5"></div>
+    <div class="face D" id="D6"></div>
+  </div>
+  <div class="faceRow">
+    <div class="face D" id="D7"></div>
+    <div class="face D" id="D8"></div>
+    <div class="face D" id="D9"></div>
+  </div>
 </div>
 
 <div id="scramble"></div>
@@ -167,7 +212,7 @@ AO5: <span id="ao5">-</span>
 let timer=document.getElementById("timer")
 let scrambleText=document.getElementById("scramble")
 let table=document.getElementById("timesTable")
-let cubeContainer=document.getElementById("cubeContainer")
+let cubeContainer=document.getElementById("cubeCross")
 
 let running=false
 let ready=false
@@ -189,13 +234,18 @@ for(let i=0;i<20;i++){
 }
 scrambleText.innerText=scramble.join(" ")
 
-// Prosty wizualny cube: losowo wybieramy kolory dla górnej ściany
-let faces=cubeContainer.querySelectorAll(".cubeFace")
-faces.forEach(f=>{
-  let colorClass=["U","D","F","B","R","L"][Math.floor(Math.random()*6)]
-  f.className="cubeFace "+colorClass
-})
+// Aktualizacja krzyżyka cube
+updateCubeColors()
+}
 
+// Funkcja aktualizacji kolorów krzyżyka
+function updateCubeColors(){
+  const faces = cubeContainer.querySelectorAll(".face");
+  faces.forEach(f=>{
+    // Losowo dla demo – można później odwzorować scramble
+    const colorClass = ["U","D","F","B","R","L"][Math.floor(Math.random()*6)];
+    f.className = "face " + colorClass;
+  });
 }
 
 function updateTimer(){
