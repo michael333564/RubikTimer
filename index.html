@@ -19,30 +19,39 @@ margin-top:15px;
 color:#ffd93d;
 }
 
-/* ===== CUBE (mniejszy) ===== */
+/* ===== CUBE ===== */
 #cubeCross{
 display:inline-block;
 margin-top:10px;
-transform:scale(0.8); /* 🔥 zmniejsza całość */
+transform:scale(0.8);
 }
 
+/* góra/dół */
 .faceRow{
 display:flex;
 justify-content:center;
 margin-bottom:4px;
 }
 
+/* środek */
 .middleRow{
 display:flex;
 justify-content:center;
-margin-bottom:4px;
-gap:10px;
+gap:18px; /* odstępy między ścianami */
+margin:10px 0;
 }
 
+/* każda ściana */
+.faceBlock{
+display:grid;
+grid-template-columns:repeat(3, 1fr);
+gap:2px;
+}
+
+/* kwadrat */
 .face{
 width:26px;
 height:26px;
-margin:1px;
 border:2px solid #111;
 border-radius:4px;
 }
@@ -64,7 +73,7 @@ letter-spacing:2px;
 
 /* ===== TIMER ===== */
 #timer{
-font-size:90px; /* 🔥 mniejszy ale nadal duży */
+font-size:90px;
 margin-top:20px;
 }
 
@@ -135,26 +144,33 @@ font-size:13px;
 <div class="face U"></div><div class="face U"></div><div class="face U"></div>
 </div>
 
-<!-- MIDDLE -->
+<!-- ŚRODEK -->
 <div class="middleRow">
+
+<div class="faceBlock">
 <div class="face L"></div><div class="face L"></div><div class="face L"></div>
+<div class="face L"></div><div class="face L"></div><div class="face L"></div>
+<div class="face L"></div><div class="face L"></div><div class="face L"></div>
+</div>
+
+<div class="faceBlock">
 <div class="face F"></div><div class="face F"></div><div class="face F"></div>
+<div class="face F"></div><div class="face F"></div><div class="face F"></div>
+<div class="face F"></div><div class="face F"></div><div class="face F"></div>
+</div>
+
+<div class="faceBlock">
 <div class="face R"></div><div class="face R"></div><div class="face R"></div>
+<div class="face R"></div><div class="face R"></div><div class="face R"></div>
+<div class="face R"></div><div class="face R"></div><div class="face R"></div>
+</div>
+
+<div class="faceBlock">
+<div class="face B"></div><div class="face B"></div><div class="face B"></div>
+<div class="face B"></div><div class="face B"></div><div class="face B"></div>
 <div class="face B"></div><div class="face B"></div><div class="face B"></div>
 </div>
 
-<div class="middleRow">
-<div class="face L"></div><div class="face L"></div><div class="face L"></div>
-<div class="face F"></div><div class="face F"></div><div class="face F"></div>
-<div class="face R"></div><div class="face R"></div><div class="face R"></div>
-<div class="face B"></div><div class="face B"></div><div class="face B"></div>
-</div>
-
-<div class="middleRow">
-<div class="face L"></div><div class="face L"></div><div class="face L"></div>
-<div class="face F"></div><div class="face F"></div><div class="face F"></div>
-<div class="face R"></div><div class="face R"></div><div class="face R"></div>
-<div class="face B"></div><div class="face B"></div><div class="face B"></div>
 </div>
 
 <!-- D -->
